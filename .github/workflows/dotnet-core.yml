@@ -24,9 +24,9 @@ jobs:
         dotnet-version: 3.1.301
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
+    - name: Build CommandAPI
       run: dotnet build --configuration $bldConfig --no-restore
       working-directory: ./src/CommandAPI
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    - name: Unit tests for CommandAPI 
+      run: dotnet test --configuration $bldConfig --no-restore --verbosity normal
       working-directory: ./test/CommandAPI.Tests
