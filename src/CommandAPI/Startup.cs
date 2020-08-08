@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,14 @@ namespace CommandAPI
             builder.Password = Configuration["Password"];
 
             services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(builder.ConnectionString));
+
+            // Define service hook to use of Azure Active Directory for authentication
+            services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
+                .AddJwtBearer( opt =>
+                {
+                    opt.Audience = Configuration[ "ResoureId" ];
+                    opt.Authority = $"{Configuration[ "InstanceId" ]}{Configuration[ "TenentId" ]}";
+                });
             
             services.AddControllers( );
         }
@@ -49,6 +58,10 @@ namespace CommandAPI
             }
 
             app.UseRouting();
+
+            // Add authentication and authorization to pipeline.
+            app.UseAuthentication( );
+            app.UseAuthorization( );
 
             app.UseEndpoints(endpoints =>
             {

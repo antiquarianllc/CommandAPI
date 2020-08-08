@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +27,7 @@ namespace CommandAPI.Controllers
         }
 
         // GET:      api/commands/{Id}
-        //[Authorize]
+        [Authorize]
         [HttpGet( "{id}" )]
         public ActionResult<Command> GetCommandItem( int id )
         {
