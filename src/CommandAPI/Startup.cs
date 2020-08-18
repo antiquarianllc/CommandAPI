@@ -35,13 +35,13 @@ namespace CommandAPI
 
             services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(builder.ConnectionString));
 
-            // Define service hook to use of Azure Active Directory for authentication
+            // Define service hook to use of Azure Active Directory for authentication.
             services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
                 .AddJwtBearer( opt =>
                 {
-                    opt.Audience = Configuration[ "ResoureId" ];
-                    opt.Authority = $"{Configuration[ "InstanceId" ]}{Configuration[ "TenentId" ]}";
-                });
+                    opt.Audience = Configuration[ "ResourceId" ];
+                    opt.Authority = $"{Configuration[ "Instance" ]}{Configuration[ "TenantId" ]}";
+                } );
             
             services.AddControllers( );
         }
