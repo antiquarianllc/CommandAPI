@@ -22,7 +22,7 @@ namespace CommandAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Command>> GetCommandItems( )
         {
-            // 2020/07/31.  Comment added to test if Azure DevOps CI works.
+
             return _context.CommandItems;
         }
 
